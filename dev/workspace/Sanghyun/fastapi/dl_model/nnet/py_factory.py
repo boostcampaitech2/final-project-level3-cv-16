@@ -117,7 +117,7 @@ class NetworkFactory(object):
         file_path = osp.dirname(file_path)               # dl_model
         file_path = osp.dirname(file_path)               # fastapi
         cache_file = os.path.join(file_path, cache_file) # fastapi/cache_path
-        with open(cache_file, "r") as f:
+        with open(cache_file, "rb") as f:
             print("torch.cuda.is_available() ::: ", torch.cuda.is_available())
             if torch.cuda.is_available():
                 params = torch.load(f)

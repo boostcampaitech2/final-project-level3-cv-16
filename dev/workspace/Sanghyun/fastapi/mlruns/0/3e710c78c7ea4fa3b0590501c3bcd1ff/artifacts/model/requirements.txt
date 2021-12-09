@@ -1,0 +1,10 @@
+mlflow
+azureml-pipeline-steps==1.36.0
+backports-weakref==1.0.post1
+cloudpickle==1.6.0
+contextvars==2.4
+matplotlib==2.2.2
+pillow==8.4.0
+torch==1.1.0
+torchvision==0.2.1
+tqdm==4.23.0

@@ -7,7 +7,12 @@ from tqdm import tqdm
 import numpy as np
 type_dict = {0:(0,255,0),1:(255,0,0),2:(230,230,0),3:(230,0,233),4:(255,0,255)}
 def drawArc(im, group, type):
-    draw = ImageDraw.Draw(im)
+    try:
+        print("The input image is ndarray")
+        im = Image.fromarray(im)
+        draw = ImageDraw.Draw(im)
+    except:
+        draw = ImageDraw.Draw(im)
     xy_list1 = [group[0], group[1]]
     xy_list2 = [group[0], group[2]]
     draw.line(xy_list1, fill=type_dict[type], width=2)
@@ -132,15 +137,12 @@ def check_key(k, keys, centers):
 
 def check_center(keys, center):
     flag = False
-    print("len(keys)", len(keys))
     for i in range(len(keys)):
         rl = cal_dis(keys[i], center)
         rr = cal_dis(keys[(i+1)%len(keys)], center)
-        print("abs value", abs((rl-rr)/rr))
         if abs((rl-rr)/rr) < 0.1:
             flag = True
             break
-    print("flag", flag)
     return flag
 
 
@@ -149,13 +151,10 @@ def filter(centers, keys):
     global center
     center = centers[0]
     keys = sorted(keys, key=cross, reverse=True)
-    print("keys", keys)
     for i in range(len(keys)-1, -1, -1):
         if not check_key(i, keys, centers):
             keys.remove(keys[i])
-    print("removed_keys", keys)
     for i in range(len(centers)-1, -1, -1):
-        print("filter",i, centers)
         if not check_center(keys, centers[i]):
             centers.remove(centers[i])
     return centers, keys
@@ -238,13 +237,13 @@ def GroupPie(image, tls_raw, brs_raw):
         centers, keys = filter(centers, keys)
         if len(centers) == 1:
             groups = pair_one(centers[0], keys)
-            for group in groups:
-                drawArc(image, group, 0)
+            # for group in groups:
+                # drawArc(image, group, 0)
         if len(centers) > 1:
             r, threshold = estimatie_r(centers, keys)
             groups = pair_multi(centers, keys, r, threshold)
-            for group in groups:
-                drawArc(image, group, 0)
+            # for group in groups:
+                # drawArc(image, group, 0)
         data_rs = []
         for group in groups:
             center_x = group[0][0]
@@ -270,8 +269,8 @@ def GroupPie(image, tls_raw, brs_raw):
         data_pure = []
         for datum in data_rs:
             data_pure.append(datum[1])
-        return data_pure
+        return data_pure, groups
 
-    # else:
-    #     return []
+    else:
+        return ["data_pure is not found"],["groups is not found"]
 

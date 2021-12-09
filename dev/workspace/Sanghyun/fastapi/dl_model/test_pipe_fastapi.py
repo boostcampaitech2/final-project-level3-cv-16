@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 import os
 import json
+from io import BytesIO
 import importlib
 import os.path as osp
 from PIL import Image
+import numpy as np
+from abc import ABCMeta, abstractmethod
 
 import torch
 torch.backends.cudnn.benchmark = False
@@ -18,6 +21,8 @@ from dl_model.RuleGroup.Pie import GroupPie
 #######################
 # classes & functions #
 #######################
+
+
 
 def load_net(testiter, cfg_name, data_dir, cache_dir, cuda_id=0):
     cfg_file = os.path.join(osp.dirname(osp.abspath(__file__)), "config", cfg_name + ".json")
@@ -45,34 +50,27 @@ def load_net(testiter, cfg_name, data_dir, cache_dir, cuda_id=0):
     nnet.eval_mode()
     return db, nnet
 
-def Pre_load_nets(type, id_cuda, data_dir, cache_dir):
-    methods = {}
-    if type == "Pie":
-        db_pie, nnet_pie = load_net(50000, "CornerNetPurePie", data_dir, cache_dir,
-                                    id_cuda)
-        path = 'testfile.test_%s' % "CornerNetPurePie"
-        testing_pie = importlib.import_module(path).testing
-        methods['Pie'] = [db_pie, nnet_pie, testing_pie]
-    return methods
-
-class TEST:
-    def __init__(self, methods):
-        self.methods = methods
-    def test(self, image_path, data_type):
-        methods = self.methods
-        image = Image.fromarray(cv2.imread(image_path))
-        with torch.no_grad():
-            if data_type == 'Pie':
-                print("Predicted as PieChart")
-                results = methods['Pie'][2](image, methods['Pie'][0], methods['Pie'][1], debug=False)
-                cens = results[0]
-                keys = results[1]
-                pie_data = GroupPie(image, cens, keys)
-                return pie_data
-
 #methods = Pre_load_nets(args.type, 0, args.data_dir, args.cache_path)
 data_path = os.path.join(osp.dirname(osp.abspath(__file__)),"data/piedata(1008)")
-methods = Pre_load_nets("Pie", 0, data_path, "cache_path")
-test = TEST(methods)
+db_pie, nnet_pie = load_net(50000, "CornerNetPurePie", data_path,  "cache_path", 0)
+path = "dl_model.testfile.test_CornerNetPurePie"
+testing_pie = importlib.import_module(path).testing
 
+class TEST_MODEL:
+    def __init__(self, db_pie, nnet_pie, debug=False):
+        self.db_pie = db_pie
+        self.nnet_pie = nnet_pie
+        self.debug = debug
+    
+    @abstractmethod
+    def __call__(self, x):
+        
+        results = testing_pie(x, db_pie, nnet_pie, debug=False)
+        cens = results[0]
+        keys = results[1]
+        # print(results)
+        pie_data, groups = GroupPie(x, cens, keys)
+        
+        return pie_data, groups
+dl_model = TEST_MODEL(db_pie, nnet_pie, debug=False)
 print("model loaded")

@@ -1,0 +1,15 @@
+artifact_uri: file:///opt/ml/final/final-project-level3-cv-16/dev/workspace/Sanghyun/fastapi/mlruns/0/04c22acc7f03467a8b63144a64495890/artifacts
+end_time: 1638973873586
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 04c22acc7f03467a8b63144a64495890
+run_uuid: 04c22acc7f03467a8b63144a64495890
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1638973861783
+status: 3
+tags: []
+user_id: root

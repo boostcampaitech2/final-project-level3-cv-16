@@ -18,7 +18,10 @@ BASE_DIR = osp.dirname(osp.dirname(osp.abspath(__file__)))
 IMG_DIR = osp.join(BASE_DIR, "asset/")
 SERVER_IMG_DIR = osp.join("http://localhost:8000/", "asset/")
 
-@router.post("/")
+class Item(BaseModel):
+    instances: List
+
+@router.post("/items/inference/")
 async def image_file(
     image : UploadFile = File(...)
 ):
