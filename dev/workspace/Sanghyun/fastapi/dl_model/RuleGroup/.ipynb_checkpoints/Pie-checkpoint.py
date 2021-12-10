@@ -264,12 +264,13 @@ def GroupPie(image, tls_raw, brs_raw):
             theta_y = math.degrees(math.acos((-y1 / math.sqrt(x1 * x1 + y1 * y1))))
             if x1 < 0:
                 theta_y = 360 - theta_y
-            data_rs.append([theta_y, theta])
+            data_rs.append([theta_y, theta, group])
         data_rs.sort(key=ekey)
-        data_pure = []
+        theta_rtn, group_rtn = [], []
         for datum in data_rs:
-            data_pure.append(datum[1])
-        return data_pure, groups
+            theta_rtn.append(datum[1])
+            group_rtn.append(datum[2])
+        return theta_rtn, group_rtn
 
     else:
         return ["data_pure is not found"],["groups is not found"]
