@@ -104,15 +104,31 @@ for deg, point in zip(deg_li, points_li):
     x = (arc_center[0] + center_x)/2
     y = (arc_center[1] + center_y)/2
     if deg < 180:
-        plt.text(x, y, "%d%%" % math.ceil(float(deg)/360*100),bbox = {'boxstyle': 'round',
-        'ec': (0.8, 0.8, 0.8),
-        'fc': (1.0, 1.0, 1.0)})
+        plt.text(
+            x, 
+            y, 
+            "%d%%" % math.ceil(float(deg)/360*100),
+            fontsize=5,
+            bbox = {
+                'boxstyle': 'round',
+                'ec': (0.8, 0.8, 0.8),
+                'fc': (1.0, 1.0, 1.0)
+            }
+        )
     else:
         x = 2*center_x - x
         y = 2*center_y - y
-        plt.text(x, y, "%d%%" % math.ceil(float(deg)/360*100), bbox = {'boxstyle': 'round',
-        'ec': (0.8, 0.8, 0.8),
-        'fc': (1.0, 1.0, 1.0)})
+        plt.text(
+            x, 
+            y, 
+            "%d%%" % math.ceil(float(deg)/360*100),
+            fontsize=5,
+            bbox = {
+                'boxstyle': 'round',
+                'ec': (0.8, 0.8, 0.8),
+                'fc': (1.0, 1.0, 1.0)
+            }
+        )
         
 plt.imshow(img)
 plt.axis("off")
