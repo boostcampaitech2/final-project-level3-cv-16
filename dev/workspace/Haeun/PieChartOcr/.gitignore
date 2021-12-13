@@ -6,6 +6,7 @@ results/
 *.o*
 
 data/
+wandb/
 
 .empty/
 .idea/

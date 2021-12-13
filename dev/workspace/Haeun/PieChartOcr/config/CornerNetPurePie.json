@@ -8,7 +8,7 @@
         "val_split": "valchart",
         "test_split": "testchart",
 
-        "learning_rate": 0.00025,
+        "learning_rate": 0.000025,
         "decay_rate": 10,
 
         "val_iter": 100,
@@ -16,9 +16,9 @@
         "opt_algo": "adam",
         "prefetch_size": 5,
 
-        "max_iter": 50000,
+        "max_iter": 20000,
         "stepsize": 45000,
-        "snapshot": 5000,
+        "snapshot": 2000,
 
         "chunk_sizes": [5, 7, 7, 7],
 

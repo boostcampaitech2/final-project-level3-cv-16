@@ -30,6 +30,7 @@ def train(training_dbs, validation_db, start_iter=0):
     stepsize         = system_configs.stepsize
     val_ind = 0
     train_ind = 0
+    min_loss = -1
     print("building model...")
     nnet = NetworkFactory()
 
@@ -84,10 +85,13 @@ def train(training_dbs, validation_db, start_iter=0):
             validation_loss = nnet.validate(**validation)
             print("validation loss at iteration {}: {}".format(iteration, validation_loss.item()))
             run.log('val_loss', validation_loss.item())
+            if min_loss < 0:
+                min_loss = validation_loss.item()
             nnet.train_mode()
 
-        if iteration % snapshot == 0:
+        if iteration % snapshot == 0 and validation_loss.item() < min_loss:
             nnet.save_params(iteration)
+            min_loss = validation_loss.item()
 
         if iteration % stepsize == 0:
             learning_rate /= decay_rate
