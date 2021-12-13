@@ -1,0 +1,14 @@
+results/
+
+*.swp
+
+*.pyc
+*.o*
+
+data/
+wandb/
+
+.empty/
+.idea/
+.ipynb_checkpoints/
+.vscode/
