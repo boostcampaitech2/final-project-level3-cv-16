@@ -6,3 +6,8 @@ results/
 *.o*
 
 data/
+
+.empty/
+.idea/
+.ipynb_checkpoints/
+.vscode/
