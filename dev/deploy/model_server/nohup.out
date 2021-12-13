@@ -158,3 +158,258 @@ INFO:     118.67.131.121:35360 - "POST /items/ HTTP/1.1" 200 OK
 INFO:     118.67.131.121:35380 - "POST /items/ HTTP/1.1" 200 OK
 INFO:     118.67.131.121:35618 - "POST /items/ HTTP/1.1" 200 OK
 INFO:     118.67.131.121:35638 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server']
+INFO:     Uvicorn running on http://0.0.0.0:6006 (Press CTRL+C to quit)
+INFO:     Started reloader process [61689] using statreload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/subprocess.py", line 76, in subprocess_started
+    target(sockets=sockets)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/server.py", line 68, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/asyncio/base_events.py", line 641, in run_until_complete
+    return future.result()
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/server.py", line 76, in serve
+    config.load()
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/config.py", line 456, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/importer.py", line 24, in import_from_string
+    raise exc from None
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/importer.py", line 21, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server/./model_serve.py", line 9, in <module>
+    from dl_model.test_pipe_fastapi import dl_model
+  File "/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server/./dl_model/test_pipe_fastapi.py", line 11, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+INFO:     Stopping reloader process [61689]
+INFO:     Will watch for changes in these directories: ['/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server']
+INFO:     Uvicorn running on http://0.0.0.0:6006 (Press CTRL+C to quit)
+INFO:     Started reloader process [61705] using statreload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/subprocess.py", line 76, in subprocess_started
+    target(sockets=sockets)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/server.py", line 68, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/asyncio/base_events.py", line 641, in run_until_complete
+    return future.result()
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/server.py", line 76, in serve
+    config.load()
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/config.py", line 456, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/importer.py", line 24, in import_from_string
+    raise exc from None
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/site-packages/uvicorn/importer.py", line 21, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/conda/envs/BackEndFastAPI/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server/./model_serve.py", line 9, in <module>
+    from dl_model.test_pipe_fastapi import dl_model
+  File "/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server/./dl_model/test_pipe_fastapi.py", line 11, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+INFO:     Stopping reloader process [61705]
+INFO:     Will watch for changes in these directories: ['/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server']
+INFO:     Uvicorn running on http://0.0.0.0:6006 (Press CTRL+C to quit)
+INFO:     Started reloader process [61724] using statreload
+INFO:     Started server process [61726]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+loading parameters at iteration: 50000
+loading from cache file: cache_path/pie_val2019.pkl
+loading annotations into memory...
+/opt/ml/final/final-project-level3-cv-16/dev/deploy/model_server/dl_model/data/piedata(1008)/pie/annotations/instancesPie(1008)_val2019.json
+Done (t=0.03s)
+creating index...
+index created!
+building neural network...
+module_file: dl_model.models.CornerNetPurePie
+use kp pure pie
+total parameters: 198592652
+loading parameters...
+loading model from cache_path/nnet/CornerNetPurePie/CornerNetPurePie_50000.pkl
+torch.cuda.is_available() :::  True
+model loaded
+INFO:     49.50.175.108:41084 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     49.50.175.108:41104 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     49.50.175.108:41518 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     49.50.175.108:41600 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:43292 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     49.50.175.108:41894 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51546 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51552 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51562 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51564 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51632 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51636 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51642 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51644 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51646 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51682 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51686 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51696 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51700 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51702 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51720 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51730 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51742 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51748 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51756 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51762 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51770 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51776 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51790 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51802 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51828 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51838 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51844 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51852 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51858 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:51864 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44278 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44296 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44306 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44338 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44362 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44368 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44374 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44378 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44386 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44404 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44414 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:44462 - "POST /items/ HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+Traceback (most recent call last):
+  File "/opt/conda/envs/DeepRuleFastAPI/lib/python3.6/site-packages/uvicorn/protocols/http/h11_impl.py", line 136, in handle_events
+    event = self.conn.next_event()
+  File "/opt/conda/envs/DeepRuleFastAPI/lib/python3.6/site-packages/h11/_connection.py", line 443, in next_event
+    exc._reraise_as_remote_protocol_error()
+  File "/opt/conda/envs/DeepRuleFastAPI/lib/python3.6/site-packages/h11/_util.py", line 76, in _reraise_as_remote_protocol_error
+    raise self
+  File "/opt/conda/envs/DeepRuleFastAPI/lib/python3.6/site-packages/h11/_connection.py", line 425, in next_event
+    event = self._extract_next_receive_event()
+  File "/opt/conda/envs/DeepRuleFastAPI/lib/python3.6/site-packages/h11/_connection.py", line 367, in _extract_next_receive_event
+    event = self._reader(self._receive_buffer)
+  File "/opt/conda/envs/DeepRuleFastAPI/lib/python3.6/site-packages/h11/_readers.py", line 68, in maybe_read_from_IDLE_client
+    raise LocalProtocolError("illegal request line")
+h11._util.RemoteProtocolError: illegal request line
+INFO:     118.67.131.121:45934 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:45954 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:45964 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:45978 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:45982 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:45998 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46002 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46040 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46048 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46056 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46108 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46128 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46132 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46140 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46144 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46148 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46152 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46158 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46170 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46212 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46226 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46242 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46250 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46272 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46332 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46368 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46416 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46460 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46472 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46480 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46492 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:46528 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47594 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47610 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47616 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47632 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47646 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47650 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47656 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47714 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47720 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47748 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47832 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47892 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47928 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:47964 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:48004 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:48040 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:48048 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:48086 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:48136 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:48156 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:36710 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:36712 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50412 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50422 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50432 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50446 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50450 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50460 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50464 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50512 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:50516 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37274 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37322 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37332 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37340 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37348 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37362 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37372 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37382 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37392 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37398 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37416 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37422 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37436 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37486 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37492 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37502 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37512 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37522 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37532 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     182.227.69.137:37552 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51140 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51146 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51154 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51158 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51160 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51218 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51240 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51246 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51254 - "POST /items/ HTTP/1.1" 200 OK
+INFO:     118.67.131.121:51262 - "POST /items/ HTTP/1.1" 200 OK

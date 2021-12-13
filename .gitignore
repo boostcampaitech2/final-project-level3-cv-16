@@ -3,3 +3,4 @@
 /**/*.jpeg
 /**/data/
 /**/*.pkl
+/**/__pycache__/
