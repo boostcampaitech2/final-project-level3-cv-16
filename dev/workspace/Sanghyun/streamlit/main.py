@@ -55,22 +55,7 @@ def main():
             data=json.dumps(req)
         )
 
-        res_eval = eval(response.text)
-        for k, v in res_eval.items():
-            st.write("### "+str(k))
-            st.write(str(v))
-        
         groups = res_eval["grp"]
-        for group in groups:
-            for i, xy in enumerate(group):
-                if i == 3:
-                    continue
-                xy = list(map(int,xy))
-                c = (255, 0, 0) if i==0 else (0, 0, 255)
-                cv2.circle(
-                    img, 
-                    center=xy, radius=5, color=c, thickness=-1, 
-                    lineType=None, shift=None)
         
         st.image(img)
 

@@ -1,7 +1,6 @@
-from typing import Optional, List
+from typing import List
 
 from fastapi import FastAPI
-from starlette.responses import JSONResponse
 
 from pydantic import BaseModel
 import numpy as np

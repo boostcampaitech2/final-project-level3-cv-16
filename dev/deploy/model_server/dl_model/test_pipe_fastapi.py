@@ -9,7 +9,7 @@ import numpy as np
 from abc import ABCMeta, abstractmethod
 
 import torch
-torch.backends.cudnn.benchmark = False
+# torch.backends.cudnn.benchmark = False
 
 import cv2
 from dl_model.config import system_configs
@@ -45,8 +45,8 @@ def load_net(testiter, cfg_name, data_dir, cache_dir, cuda_id=0):
     nnet = NetworkFactory(db)
     print("loading parameters...")
     nnet.load_params(test_iter)
-    if torch.cuda.is_available():
-        nnet.cuda(cuda_id)
+    # if torch.cuda.is_available():
+        # nnet.cuda(cuda_id)
     nnet.eval_mode()
     return db, nnet
 

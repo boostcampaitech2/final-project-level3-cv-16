@@ -1,14 +1,13 @@
 from typing import List
 
 import numpy as np
-# import matplotlib
-# matplotlib.use('agg')
-# import matplotlib.pyplot as plt
 
 import json
 import requests
 from pydantic import BaseModel
 from fastapi import FastAPI
+
+from utils.visualization import plot_model_results
 
 app = FastAPI() #REST API
 
@@ -16,50 +15,35 @@ class Item(BaseModel):
     # req = {
     #     "image_as_list" : List # [H, W, C]
     # }
-    image_as_list: list
+    image_as_list: List
 
-MODEL_URL = 'http://49.50.175.108:6010/items/'
+# MODEL_URL = 'http://49.50.175.108:6010/items/'
+MODEL_URL = 'http://model_server:8000/items/'
 
 @app.get("/")
 def main_page():
     return {"main":"page"}
 
-@app.post("/items/")
+@app.post("/backend/")
 async def create_item(
     item: Item
 ):
-    # image = np.array(item.image_as_list)
-    # print(image.shape)
-    return 0 #{"hey": "wassap"}
-    image = item.image_as_list
-
+    print("in /backend/")
+    image_list = item.image_as_list
+    image_arr = np.array(image_list, dtype=np.uint8)
     # send to model server
     req_dict = {
-        "instances" : image # [H, W, C]
+        "instances" : image_list # [H, W, C]
     }
     response = requests.post(
         url=MODEL_URL,
         data=json.dumps(req_dict)
     )
-    
-    # parse a response
-    resp_eval = eval(response.text)
-    
-    im_shape = resp_eval["im_shape"]
-    # degree_list = resp_eval["drg"]
-    group_list = resp_eval["grp"]
-    
-    fig, ax = plt.subplots()
-    ax.axis("off")
-    ax.imshow(np.array(image))
-    for group in group_list:
-        ax.plot(group[0], "*r", markersize = 15)
-        ax.plot(group[1], ".b", markersize = 20)
-        ax.plot(group[2], ".b", markersize = 20)
-    
-    fig_string = fig.canvas.to_string_rgb()
-    arr_image = np.fromstring(fig_string, dtype=np.int8, sep='')
-    arr_image = np.reshape(arr_image, im_shape)
-    
-    return {"im_plot" : arr_image.tolist()}
+    # parse a response from model server
+    parsed_response = eval(response.text)
 
+    visualised_image = plot_model_results(image_arr, parsed_response)
+    
+    parsed_response.update({"im_plot" : visualised_image.tolist()})
+
+    return parsed_response

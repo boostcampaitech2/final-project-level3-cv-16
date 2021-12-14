@@ -74,8 +74,8 @@ class NetworkFactory(object):
         self.network.eval()
 
     def train(self, xs, ys, **kwargs):
-        xs = [x.cuda(non_blocking=True, device=self.cuda_id) for x in xs]
-        ys = [y.cuda(non_blocking=True, device=self.cuda_id) for y in ys]
+        # xs = [x.cuda(non_blocking=True, device=self.cuda_id) for x in xs]
+        # ys = [y.cuda(non_blocking=True, device=self.cuda_id) for y in ys]
         self.optimizer.zero_grad()
         loss = self.network(xs, ys)
         loss = loss.mean()
@@ -85,18 +85,18 @@ class NetworkFactory(object):
 
     def validate(self, xs, ys, **kwargs):
         with torch.no_grad():
-            if torch.cuda.is_available():
-                xs = [x.cuda(non_blocking=True, device=self.cuda_id) for x in xs]
-                ys = [y.cuda(non_blocking=True, device=self.cuda_id) for y in ys]
-
+            # if torch.cuda.is_available():
+            #     xs = [x.cuda(non_blocking=True, device=self.cuda_id) for x in xs]
+            #     ys = [y.cuda(non_blocking=True, device=self.cuda_id) for y in ys]
+                
             loss = self.network(xs, ys)
             loss = loss.mean()
             return loss
 
     def test(self, xs, **kwargs):
         with torch.no_grad():
-            if torch.cuda.is_available():
-                xs = [x.cuda(non_blocking=True, device=self.cuda_id) for x in xs]
+            # if torch.cuda.is_available():
+            #     xs = [x.cuda(non_blocking=True, device=self.cuda_id) for x in xs]
             return self.model(*xs, **kwargs)
 
     def set_lr(self, lr):
@@ -118,11 +118,13 @@ class NetworkFactory(object):
         file_path = osp.dirname(file_path)               # fastapi
         cache_file = os.path.join(file_path, cache_file) # fastapi/cache_path
         with open(cache_file, "rb") as f:
-            print("torch.cuda.is_available() ::: ", torch.cuda.is_available())
-            if torch.cuda.is_available():
-                params = torch.load(f)
-            else:
-                params = torch.load(f, map_location='cpu')
+            # print("torch.cuda.is_available() ::: ", torch.cuda.is_available())
+            # if torch.cuda.is_available():
+            #     params = torch.load(f)
+            # else:
+            #     params = torch.load(f, map_location='cpu')
+            print("param is mapping on 'cpu'")
+            params = torch.load(f, map_location='cpu')
             self.model.load_state_dict(params)
 
     def save_params(self, iteration):

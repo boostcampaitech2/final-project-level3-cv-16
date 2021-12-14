@@ -83,10 +83,11 @@ def kp_detection(image, db, nnet, debug=False, decode_func=kp_decode, cuda_id=0)
         sizes[0]   = [int(height * scale), int(width * scale)]
         ratios[0]  = [height_ratio, width_ratio]
 
-        if torch.cuda.is_available():
-            images = torch.from_numpy(images).cuda(cuda_id)
-        else:
-            images = torch.from_numpy(images)
+        # if torch.cuda.is_available():
+        #     images = torch.from_numpy(images).cuda(cuda_id)
+        # else:
+        #     images = torch.from_numpy(images)
+        images = torch.from_numpy(images)
         dets_tl, dets_br, time_backbone, time_psn, flag = decode_func(nnet, images, K, ae_threshold=ae_threshold, kernel=nms_kernel)
         _rescale_points(dets_tl, ratios, borders, sizes)
         _rescale_points(dets_br, ratios, borders, sizes)
