@@ -57,9 +57,10 @@ async def create_item(
 
     H, W, C = model_result_dict["im_shape"]
     degree_list = model_result_dict["dgr"]
-    
-    
+    group_list = model_result_dict["grp"]
 
+    flattened_keypoints = get_flattened_keypoints(group_list)
+    
     reader = ocr_reader[0]
     ocr_result = ocr_predict(reader, image_arr, MODEL_URL, debug=False)
     response.update({"ocr_result" : ocr_result})
@@ -70,24 +71,18 @@ async def create_item(
     return parsed_response
 
 
-def get_keypoints_value_list(
+def get_flattened_keypoints(
     keypoints_group
 ):
     '''
     [[[x_center, y_center], [x_ccw, y_ccw], [x_cw, y_cw], confidence], ...]
         -> [[x_center, y_center, x_ccw, y_ccw, x_cw, y_cw], ...]
     '''
-    keypoint = []
+    flattened_keypoints = []
     for points_group_and_confidence in keypoints_group:
         points_group = points_group_and_confidence[:-1]
-        # points_group : 
-        # [[x_center, y_center], [x_ccw, y_ccw], [x_cw, y_cw]]
         keyvals = []
         for xy in points_group:
             keyvals.extend(xy)
-        # keyvals : 
-        # [x_center, y_center, x_ccw, y_ccw, x_cw, y_cw]
-        keypoint.append(keyvals)
-    return {
-        "im_shape" : [H, W, C]
-    }
+        flattened_keypoints.append(keyvals)
+    return flattened_keypoints
