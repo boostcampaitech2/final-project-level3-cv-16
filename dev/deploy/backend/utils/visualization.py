@@ -25,20 +25,17 @@ def get_arc_center(points):
     return list(map(int, coord))
 
 
-def plot_model_results(image_arr, parsed_response):
+def plot_model_results(image_arr, im_HW, degree_list, keypoints_list):
 
+    H, W = im_HW
     
-    H, W, _ = parsed_response["im_shape"]
-    degree_list = parsed_response["dgr"]
-    group_list = parsed_response["grp"]
-
     unit = 2 # the higher the slower
     figsize = (1, H / W) if H >= W else (W / H, 1)
     figsize = (unit * figsize[0], unit * figsize[1])
     
     fig = plt.figure(figsize=figsize)
     plt.imshow(image_arr)
-    for degree, group in zip(degree_list, group_list):
+    for degree, group in zip(degree_list, keypoints_list):
         
         center_x, center_y = group[0]
         ccw_x, ccw_y = group[2]

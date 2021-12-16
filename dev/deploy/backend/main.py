@@ -39,8 +39,10 @@ async def create_item(
 ):
     response = dict()
 
+    # get image
     image_list = item.image_as_list
     image_arr = np.array(image_list, dtype=np.uint8)
+    
     # send to model server
     req_dict = {
         "instances" : image_list # [H, W, C]
@@ -50,14 +52,42 @@ async def create_item(
         data=json.dumps(req_dict)
     )
     # parse a response from model server
-    parsed_response = eval(model_response.text)
-    response.update(parsed_response)
+    model_result_dict = eval(model_response.text)
+    response.update(model_result_dict)
+
+    H, W, C = model_result_dict["im_shape"]
+    degree_list = model_result_dict["dgr"]
+    
+    
 
     reader = ocr_reader[0]
     ocr_result = ocr_predict(reader, image_arr, MODEL_URL, debug=False)
-    parsed_response.update({"ocr_result" : ocr_result})
+    response.update({"ocr_result" : ocr_result})
 
-    visualised_image = plot_model_results(image_arr, parsed_response)
-    parsed_response.update({"im_plot" : visualised_image.tolist()})
+    visualised_image = plot_model_results(image_arr, model_result_dict)
+    response.update({"im_plot" : visualised_image.tolist()})
 
     return parsed_response
+
+
+def get_keypoints_value_list(
+    keypoints_group
+):
+    '''
+    [[[x_center, y_center], [x_ccw, y_ccw], [x_cw, y_cw], confidence], ...]
+        -> [[x_center, y_center, x_ccw, y_ccw, x_cw, y_cw], ...]
+    '''
+    keypoint = []
+    for points_group_and_confidence in keypoints_group:
+        points_group = points_group_and_confidence[:-1]
+        # points_group : 
+        # [[x_center, y_center], [x_ccw, y_ccw], [x_cw, y_cw]]
+        keyvals = []
+        for xy in points_group:
+            keyvals.extend(xy)
+        # keyvals : 
+        # [x_center, y_center, x_ccw, y_ccw, x_cw, y_cw]
+        keypoint.append(keyvals)
+    return {
+        "im_shape" : [H, W, C]
+    }

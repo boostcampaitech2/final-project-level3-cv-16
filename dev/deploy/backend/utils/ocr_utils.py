@@ -4,68 +4,18 @@ import numpy as np
 import cv2
 from copy import copy
 import matplotlib.pyplot as plt
-import json
-import requests
 
+def dgr2pct(dgr):
+    return round(dgr / 360 * 100, 1)
 
-def ocr_predict(reader, img, model_url, debug=False):
-    req = {
-        "instances": img.tolist()
-    }  # [H, W, C]
-    response = requests.post(
-        url=model_url,
-        data=json.dumps(req)
-    )
-    results = reader.readtext(img, paragraph = True, y_ths = 0.3, add_margin=0)
-    res_eval = eval(response.text)
-    portion = list(map(dgr2pct, res_eval["dgr"]))
-    keypoint = [
-        [x_center, y_center, x_left, y_left, x_right, y_right]
-        for [[x_center, y_center], [x_left, y_left], [x_right, y_right], _] in res_eval[
-            "grp"
-        ]
-    ]
-    return conclude(img, results, keypoint, portion, debug=debug)
-
-
-def conclude(image, results, keypoint, portion, threshold=0, debug=False):
-    legend, legend_points, nopie = checklegend(image, keypoint, debug=debug)
-    if debug:
-        print(f"범례 유무 : {legend}")
-        print("Legend Points")
-        print(legend_points)
-        print()
-        print("OCR 결과")
-        print(results)
-        print()
-        plt.imshow(nopie)
-    ocr = []
-    for r in results:
-        if "%" in r[1]:
-            continue
-
-        ocr.append([get_left_center(r[0]), r[1]])
-
-    # 범례 있는 차트
-    if legend:
-        pq = []
-        for text in ocr:
-            for point_num, points in enumerate(legend_points):
-                dist = get_distance(text[0][0], text[0][1], points[0], points[1])
-                heapq.heappush(pq, [dist, text[1], point_num])
-
-        info = [None for i in range(len(portion))]
-
-        while pq:
-            cur = heapq.heappop(pq)
-            if info[cur[2]] is not None:
-                continue
-            info[cur[2]] = cur[1]
-
-        return {"category" : info, "value" : portion}
-    else:
-        return match(results, keypoint, portion, threshold=threshold)
-
+def print_and_plot_debuging_info(legend,legend_points,results,nopie):
+    print(f"""
+    범례 유무 : {legend}
+    Legend Points : {legend_points}
+    OCR 결과 :{results}
+    nopie_image____________________
+    """)
+    plt.imshow(nopie)
 
 def checklegend(image, keypoint, debug=False):
     legend = False
@@ -99,6 +49,58 @@ def checklegend(image, keypoint, debug=False):
             legend = True
             lst.append((x, y))
     return legend, lst, copy_image
+
+def conclude(
+    image, results, keypoint, portion, threshold=0, debug=False
+):
+    legend, legend_points, nopie = checklegend(image, keypoint, debug=debug)
+    if debug:
+        print_and_plot_debuging_info(legend,legend_points,results,nopie)
+    
+    ocr = []
+    for r in results:
+        if "%" in r[1]:
+            continue
+
+        ocr.append([get_left_center(r[0]), r[1]])
+
+    # 범례 있는 차트
+    if legend:
+        pq = []
+        for text in ocr:
+            for point_num, points in enumerate(legend_points):
+                dist = get_distance(text[0][0], text[0][1], points[0], points[1])
+                heapq.heappush(pq, [dist, text[1], point_num])
+
+        info = [None for i in range(len(portion))]
+
+        while pq:
+            cur = heapq.heappop(pq)
+            if info[cur[2]] is not None:
+                continue
+            info[cur[2]] = cur[1]
+
+        return {"category" : info, "value" : portion}
+    else:
+        return match(results, keypoint, portion, threshold=threshold)
+
+
+def ocr_predict(reader, img, degree_list, flattened_keypoints, debug=False):
+    
+    # get ocr result
+    results = reader.readtext(
+        img, 
+        paragraph=True,
+        y_ths=0.3,
+        add_margin=0
+    )
+    
+    portion = list(map(dgr2pct, degree_list))
+    ocr_result = conclude(
+        img, results, flattened_keypoints, portion, debug=debug
+    )
+    
+    return ocr_result
 
 
 def integrate(boxes):
@@ -189,5 +191,3 @@ def get_arc_center(points):
     return list(map(int, coord))
 
 
-def dgr2pct(dgr):
-    return round(dgr / 360 * 100, 1)
