@@ -1,11 +1,11 @@
-from typing import List
+from typing import ByteString
 
 import numpy as np
 
 import json
 import requests
 from pydantic import BaseModel
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 from utils.visualization import plot_model_results
 
@@ -15,10 +15,10 @@ class Item(BaseModel):
     # req = {
     #     "image_as_list" : List # [H, W, C]
     # }
-    image_as_list: List
+    _arr_bytes: bytes
 
 # MODEL_URL = 'http://49.50.175.108:6010/items/'
-MODEL_URL = 'http://model_server:8000/items/'
+# MODEL_URL = 'http://model_server:8000/items/'
 
 @app.get("/")
 def main_page():
@@ -26,24 +26,10 @@ def main_page():
 
 @app.post("/backend/")
 async def create_item(
-    item: Item
+    item: Request
 ):
     print("in /backend/")
-    image_list = item.image_as_list
-    image_arr = np.array(image_list, dtype=np.uint8)
-    # send to model server
-    req_dict = {
-        "instances" : image_list # [H, W, C]
-    }
-    response = requests.post(
-        url=MODEL_URL,
-        data=json.dumps(req_dict)
-    )
-    # parse a response from model server
-    parsed_response = eval(response.text)
-
-    visualised_image = plot_model_results(image_arr, parsed_response)
+    arr_bytes: bytes = await item.body()
+    arr_bytes = np.fromstring(arr_bytes, dtype=np.uint8)
     
-    parsed_response.update({"im_plot" : visualised_image.tolist()})
-
-    return parsed_response
+    return {"bytes" : arr_bytes.tostring()}
