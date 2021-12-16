@@ -1,7 +1,8 @@
 # Final Project
 
-- prototype
-![image](https://user-images.githubusercontent.com/35767146/146066696-424e3b16-c6bb-438b-989c-fa503d0845be.png)
+- prototype  
+![image](https://user-images.githubusercontent.com/35767146/146442515-ac94be06-62ae-4560-96df-9411e40c88de.png)  
+![image](https://user-images.githubusercontent.com/35767146/146442548-254449fb-94a3-411f-bfb8-60885fe1b2ba.png)  
 
 
 ## Version Info
