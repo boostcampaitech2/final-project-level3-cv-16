@@ -9,10 +9,11 @@ import requests
 
 import numpy as np
 from PIL import Image
+import pandas as pd
 
 import streamlit as st
 
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 
 def main():
     st.title("PIE")
@@ -46,8 +47,16 @@ def main():
         res_eval = eval(response.text)
         model_result = res_eval["im_plot"]
         model_result = np.array(model_result)
-
         st.image(model_result)
+
+        
+        ocr_result = pd.DataFrame(res_eval["ocr_result"])
+        
+        st.write("## ocr_result")
+        st.write(ocr_result)
+        csv = ocr_result.to_csv().encode('utf-8')
+        if st.download_button('Download CSV', csv, "csv_result.csv", 'text/csv'):
+            st.write('Thanks for downloading!')
 
 
 if __name__ == "__main__":

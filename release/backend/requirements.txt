@@ -5,3 +5,4 @@ starlette==0.16.0
 uvicorn==0.15.0
 python-multipart==0.0.5
 requests==2.22.0
+easyocr==1.4.1
