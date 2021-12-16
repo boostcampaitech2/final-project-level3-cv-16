@@ -1,5 +1,0 @@
-# ninja log v5
-0	13921	1639461921	/home/davi/workspace/final-project-level3-cv-16/dev/deploy/model_server/dl_model/models/py_utils/_cpools/build/temp.linux-x86_64-3.6/src/top_pool.o	c511178bec70fc3f
-0	13874	1639461935	/home/davi/workspace/final-project-level3-cv-16/dev/deploy/model_server/dl_model/models/py_utils/_cpools/build/temp.linux-x86_64-3.6/src/bottom_pool.o	623f9ae7e3c88c2
-0	13754	1639461949	/home/davi/workspace/final-project-level3-cv-16/dev/deploy/model_server/dl_model/models/py_utils/_cpools/build/temp.linux-x86_64-3.6/src/left_pool.o	8dcd42c05e39cf74
-0	13756	1639461963	/home/davi/workspace/final-project-level3-cv-16/dev/deploy/model_server/dl_model/models/py_utils/_cpools/build/temp.linux-x86_64-3.6/src/right_pool.o	96afe046e7a670bf
