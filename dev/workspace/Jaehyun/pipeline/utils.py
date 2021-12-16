@@ -14,7 +14,7 @@ def predict(reader, img, debug=False):
     req = {"instances": img.tolist()}  # [H, W, C]
 
     response = requests.post(url=url, data=json.dumps(req))
-    results = reader.readtext(img)
+    results = reader.readtext(img, paragraph = True, y_ths = 0.3, add_margin=0)
     res_eval = eval(response.text)
     portion = list(map(dgr2pct, res_eval["dgr"]))
     keypoint = [
@@ -40,8 +40,6 @@ def conclude(image, results, keypoint, portion, threshold=0, debug=False):
     ocr = []
     for r in results:
         if "%" in r[1]:
-            continue
-        if r[2] < threshold:
             continue
 
         ocr.append([get_left_center(r[0]), r[1]])
@@ -72,27 +70,14 @@ def checklegend(image, keypoint, debug=False):
     image = np.array(image)
     copy_image = copy(image)
 
-    gray = cv2.cvtColor(copy_image, cv2.COLOR_BGR2GRAY)
-    detected_circles = cv2.HoughCircles(
-        gray,
-        cv2.HOUGH_GRADIENT,
-        1,
-        20,
-        param1=100,
-        param2=80,
-        minRadius=40,
-        maxRadius=350,
-    )
+    for pt in keypoint:
+        left_radius = get_distance(pt[0], pt[1], pt[2], pt[3])
+        right_radius = get_distance(pt[0], pt[1], pt[4], pt[5])
 
-    if detected_circles is not None:
-        detected_circles = np.uint16(np.around(detected_circles))
+        radius = int((left_radius + right_radius) / 2)
 
-        for pt in detected_circles[0, :]:
-            a, b, r = pt[0], pt[1], pt[2]
-            cv2.circle(copy_image, (a, b), r + 10, (255, 255, 255), -1)
-    else:
-        print("No pie detected")
-        # 예외처리 필요?
+        cv2.circle(copy_image, (int(pt[0]), int(pt[1])), radius + 5, (255, 255, 255), -1)
+
     lst = []
     for pt in keypoint:
         COG = (int((pt[0] + pt[2] + pt[4]) / 3), int((pt[1] + pt[3] + pt[5]) / 3))
@@ -136,8 +121,6 @@ def match(ocr, keypoint, portion, threshold=0.5):
     labels = []
     for text in ocr:
         if "%" in text[1]:
-            continue
-        if text[2] < threshold:
             continue
 
         labels.append([get_center(text[0]), text[1]])
