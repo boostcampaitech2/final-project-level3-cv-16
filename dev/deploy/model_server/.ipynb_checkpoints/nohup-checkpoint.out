@@ -1,4 +1,0 @@
-INFO:     Will watch for changes in these directories: ['/opt/ml/final/final-project-level3-cv-16/dev/workspace/Sanghyun/fastapi']
-INFO:     Uvicorn running on http://0.0.0.0:6006 (Press CTRL+C to quit)
-INFO:     Started reloader process [61022] using statreload
-ERROR:    Error loading ASGI app. Could not import module "tmp".
