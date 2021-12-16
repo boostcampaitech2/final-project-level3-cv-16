@@ -16,7 +16,7 @@ app = FastAPI()
 ocr_reader = []
 @app.on_event("startup")
 def set_ocr_reader():
-    reader = easyocr.Reader(['en'])
+    reader = easyocr.Reader(['en', 'fr', 'is'], recognizer='Transformer', gpu=False)
     ocr_reader.append(reader)
 
 
@@ -37,21 +37,25 @@ class Item(BaseModel):
 async def create_item(
     item: Item
 ):
+    response = dict()
+
     image_list = item.image_as_list
     image_arr = np.array(image_list, dtype=np.uint8)
     # send to model server
     req_dict = {
         "instances" : image_list # [H, W, C]
     }
-    response = requests.post(
+    model_response = requests.post(
         url=MODEL_URL,
         data=json.dumps(req_dict)
     )
     # parse a response from model server
-    parsed_response = eval(response.text)
+    parsed_response = eval(model_response.text)
+    response.update(parsed_response)
 
     reader = ocr_reader[0]
-    ocr_predict(reader, image_arr, debug=False)
+    ocr_result = ocr_predict(reader, image_arr, MODEL_URL, debug=False)
+    parsed_response.update({"ocr_result" : ocr_result})
 
     visualised_image = plot_model_results(image_arr, parsed_response)
     parsed_response.update({"im_plot" : visualised_image.tolist()})

@@ -1,7 +1,6 @@
 import math
 import heapq
 import numpy as np
-import pandas as pd
 import cv2
 from copy import copy
 import matplotlib.pyplot as plt
@@ -9,10 +8,14 @@ import json
 import requests
 
 
-def predict(reader, img, model_url, debug=False):
-    req = {"instances": img.tolist()}  # [H, W, C]
-
-    response = requests.post(url=model_url, data=json.dumps(req))
+def ocr_predict(reader, img, model_url, debug=False):
+    req = {
+        "instances": img.tolist()
+    }  # [H, W, C]
+    response = requests.post(
+        url=model_url,
+        data=json.dumps(req)
+    )
     results = reader.readtext(img, paragraph = True, y_ths = 0.3, add_margin=0)
     res_eval = eval(response.text)
     portion = list(map(dgr2pct, res_eval["dgr"]))
@@ -59,7 +62,7 @@ def conclude(image, results, keypoint, portion, threshold=0, debug=False):
                 continue
             info[cur[2]] = cur[1]
 
-        return pd.DataFrame(portion, info)
+        return {"category" : info, "value" : portion}
     else:
         return match(results, keypoint, portion, threshold=threshold)
 
@@ -147,7 +150,7 @@ def match(ocr, keypoint, portion, threshold=0.5):
             continue
         legend[cur[2]] = cur[1]
 
-    return pd.DataFrame(portion, legend)
+    return {"category" : legend, "value" : portion}
 
 
 def get_distance(x1, y1, x2, y2):
