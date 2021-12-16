@@ -149,6 +149,11 @@ def match(ocr, keypoint, portion, threshold=0.5):
     for label in labels:
         for point_num, points in enumerate(keypoint):
             COA = get_arc_center(points)
+            center_x = points[0]
+            center_y = points[1]
+            if portion[point_num] > 50:
+                COA[0] = 2*center_x - COA[0]
+                COA[1] = 2*center_y - COA[1]
             dist = get_distance(label[0][0], label[0][1], COA[0], COA[1])
             heapq.heappush(pq, [dist, label[1], point_num])
 
