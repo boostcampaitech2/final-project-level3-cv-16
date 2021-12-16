@@ -1,3 +1,7 @@
-*.pyc
-**/__pycache_
-**/wandb
+/**/*.png
+/**/*.jpg
+/**/*.jpeg
+/**/data/
+/**/*.pkl
+/**/__pycache__/
+.pyc
