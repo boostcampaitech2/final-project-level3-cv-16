@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from utils.ocr_utils import ocr_predict
 from utils.visualization import plot_model_results
-
+from utils.keypoints import get_flattened_keypoints
 app = FastAPI()
 
 ocr_reader = []
@@ -55,34 +55,30 @@ async def create_item(
     model_result_dict = eval(model_response.text)
     response.update(model_result_dict)
 
-    H, W, C = model_result_dict["im_shape"]
+    im_shape = model_result_dict["im_shape"]
     degree_list = model_result_dict["dgr"]
     group_list = model_result_dict["grp"]
 
     flattened_keypoints = get_flattened_keypoints(group_list)
     
     reader = ocr_reader[0]
-    ocr_result = ocr_predict(reader, image_arr, MODEL_URL, debug=False)
+    ocr_result = ocr_predict(
+        reader,
+        image_arr, 
+        degree_list, 
+        flattened_keypoints, 
+        debug=False
+    )
     response.update({"ocr_result" : ocr_result})
 
-    visualised_image = plot_model_results(image_arr, model_result_dict)
+    visualised_image = plot_model_results(
+        image_arr, 
+        im_shape, 
+        degree_list, 
+        flattened_keypoints
+    )
     response.update({"im_plot" : visualised_image.tolist()})
 
-    return parsed_response
+    return response
 
 
-def get_flattened_keypoints(
-    keypoints_group
-):
-    '''
-    [[[x_center, y_center], [x_ccw, y_ccw], [x_cw, y_cw], confidence], ...]
-        -> [[x_center, y_center, x_ccw, y_ccw, x_cw, y_cw], ...]
-    '''
-    flattened_keypoints = []
-    for points_group_and_confidence in keypoints_group:
-        points_group = points_group_and_confidence[:-1]
-        keyvals = []
-        for xy in points_group:
-            keyvals.extend(xy)
-        flattened_keypoints.append(keyvals)
-    return flattened_keypoints

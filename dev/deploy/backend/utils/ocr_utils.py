@@ -5,17 +5,26 @@ import cv2
 from copy import copy
 import matplotlib.pyplot as plt
 
+
+def ocr_predict(reader, img, degree_list, flattened_keypoints, debug=False):
+    
+    # get ocr result
+    results = reader.readtext(
+        img, 
+        paragraph=True,
+        y_ths=0.3,
+        add_margin=0
+    )
+    
+    portion = list(map(dgr2pct, degree_list))
+    ocr_result = conclude(
+        img, results, flattened_keypoints, portion, debug=debug
+    )
+    
+    return ocr_result
+
 def dgr2pct(dgr):
     return round(dgr / 360 * 100, 1)
-
-def print_and_plot_debuging_info(legend,legend_points,results,nopie):
-    print(f"""
-    범례 유무 : {legend}
-    Legend Points : {legend_points}
-    OCR 결과 :{results}
-    nopie_image____________________
-    """)
-    plt.imshow(nopie)
 
 def checklegend(image, keypoint, debug=False):
     legend = False
@@ -38,7 +47,6 @@ def checklegend(image, keypoint, debug=False):
         mask_image = copy(copy_image)
         mask = cv2.inRange(mask_image, color, color)
         colormap = cv2.bitwise_and(mask_image, mask_image, mask=mask)
-        pixels = cv2.countNonZero(mask)
         x = np.nonzero(colormap)[1].mean()
         y = np.nonzero(colormap)[0].mean()
 
@@ -55,7 +63,13 @@ def conclude(
 ):
     legend, legend_points, nopie = checklegend(image, keypoint, debug=debug)
     if debug:
-        print_and_plot_debuging_info(legend,legend_points,results,nopie)
+        print(f"""
+        범례 유무 : {legend}
+        Legend Points : {legend_points}
+        OCR 결과 :{results}
+        nopie_image____________________
+        """)
+        plt.imshow(nopie)
     
     ocr = []
     for r in results:
@@ -83,31 +97,6 @@ def conclude(
         return {"category" : info, "value" : portion}
     else:
         return match(results, keypoint, portion, threshold=threshold)
-
-
-def ocr_predict(reader, img, degree_list, flattened_keypoints, debug=False):
-    
-    # get ocr result
-    results = reader.readtext(
-        img, 
-        paragraph=True,
-        y_ths=0.3,
-        add_margin=0
-    )
-    
-    portion = list(map(dgr2pct, degree_list))
-    ocr_result = conclude(
-        img, results, flattened_keypoints, portion, debug=debug
-    )
-    
-    return ocr_result
-
-
-def integrate(boxes):
-    """
-    박스 가까운 애들끼리 합치기
-    """
-    return boxes
 
 
 def get_center(boxes):
@@ -186,8 +175,6 @@ def get_arc_center(points):
     )
     coord = (math.cos(angle) * radius + x_center, -math.sin(angle) * radius + y_center)
 
-    # print((norm_y1 + norm_y2)/2, (norm_x1 + norm_x2)/2)
-    # print(angle)
     return list(map(int, coord))
 
 
