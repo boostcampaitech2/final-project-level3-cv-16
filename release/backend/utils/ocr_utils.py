@@ -11,9 +11,10 @@ def ocr_predict(reader, img, degree_list, flattened_keypoints, debug=False):
     # get ocr result
     results = reader.readtext(
         img, 
-        paragraph=True,
-        y_ths=0.3,
-        add_margin=0
+        text_threshold = 0.3, 
+        paragraph = True, 
+        y_ths = 0.05, 
+        width_ths =0.3
     )
     
     portion = list(map(dgr2pct, degree_list))
@@ -26,7 +27,7 @@ def ocr_predict(reader, img, degree_list, flattened_keypoints, debug=False):
 def dgr2pct(dgr):
     return round(dgr / 360 * 100, 1)
 
-def checklegend(image, keypoint, debug=False):
+def checklegend(image, portion, keypoint, debug=False):
     legend = False
     image = np.array(image)
     copy_image = copy(image)
@@ -40,8 +41,11 @@ def checklegend(image, keypoint, debug=False):
         cv2.circle(copy_image, (int(pt[0]), int(pt[1])), radius + 5, (255, 255, 255), -1)
 
     lst = []
-    for pt in keypoint:
-        COG = (int((pt[0] + pt[2] + pt[4]) / 3), int((pt[1] + pt[3] + pt[5]) / 3))
+    for i, pt in enumerate(keypoint):
+        COG = [int((pt[0] + pt[2] + pt[4]) / 3), int((pt[1] + pt[3] + pt[5]) / 3)]
+        if portion[i] > 50:
+            COG[0] = int(2*pt[0] - COG[0])
+            COG[1] = int(2*pt[1] - COG[1])
         color = copy(image[COG[1], COG[0], :])
 
         mask_image = copy(copy_image)
@@ -61,7 +65,7 @@ def checklegend(image, keypoint, debug=False):
 def conclude(
     image, results, keypoint, portion, threshold=0, debug=False
 ):
-    legend, legend_points, nopie = checklegend(image, keypoint, debug=debug)
+    legend, legend_points, nopie = checklegend(image, portion, keypoint, debug=debug)
     if debug:
         print(f"""
         범례 유무 : {legend}
@@ -73,7 +77,7 @@ def conclude(
     
     ocr = []
     for r in results:
-        if "%" in r[1]:
+        if (set(str(r[1]))-set(['0','1','2','3','4','5','6','7','8','9','.',' ', '%']) == set()):
             continue
 
         ocr.append([get_left_center(r[0]), r[1]])
@@ -113,7 +117,7 @@ def get_left_center(boxes):
 def match(ocr, keypoint, portion, threshold=0.5):
     labels = []
     for text in ocr:
-        if "%" in text[1]:
+        if (set(str(text[1]))-set(['0','1','2','3','4','5','6','7','8','9','.',' ', '%']) == set()):
             continue
 
         labels.append([get_center(text[0]), text[1]])
@@ -150,13 +154,6 @@ def get_distance(x1, y1, x2, y2):
 
 def get_arc_center(points):
     x_center, y_center, x_left, y_left, x_right, y_right = points
-    assert (
-        abs(
-            get_distance(x_left, y_left, x_center, y_center)
-            - get_distance(x_right, y_right, x_center, y_center)
-        )
-        < 5
-    )
 
     radius = get_distance(x_left, y_left, x_center, y_center)
     norm_x_left, norm_x_right = (
