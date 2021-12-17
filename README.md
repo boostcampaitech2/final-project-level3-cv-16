@@ -60,7 +60,7 @@
   - POST ("/items/")  
   
     **request**
-    -  "instances" : 원본 이미지 ([H, W, C] : List[List[List]])  
+    -  "instances" : 원본 이미지 ([H, W, C] : List[List[int, int, int]])  
     
     **response**
     - "im_shape" : 원본 이미지의 크기 ([H, W, C] : List[int, int, int])
