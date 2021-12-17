@@ -42,10 +42,10 @@ def checklegend(image, portion, keypoint, debug=False):
 
     lst = []
     for i, pt in enumerate(keypoint):
-        COG = (int((pt[0] + pt[2] + pt[4]) / 3), int((pt[1] + pt[3] + pt[5]) / 3))
+        COG = [int((pt[0] + pt[2] + pt[4]) / 3), int((pt[1] + pt[3] + pt[5]) / 3)]
         if portion[i] > 50:
-            COG[0] = 2*pt[0] - COG[0]
-            COG[1] = 2*pt[1] - COG[1]
+            COG[0] = int(2*pt[0] - COG[0])
+            COG[1] = int(2*pt[1] - COG[1])
         color = copy(image[COG[1], COG[0], :])
 
         mask_image = copy(copy_image)
