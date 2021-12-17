@@ -11,9 +11,10 @@ def ocr_predict(reader, img, degree_list, flattened_keypoints, debug=False):
     # get ocr result
     results = reader.readtext(
         img, 
-        paragraph=True,
-        y_ths=0.3,
-        add_margin=0
+        text_threshold = 0.3, 
+        paragraph = True, 
+        y_ths = 0.05, 
+        width_ths =0.3
     )
     
     portion = list(map(dgr2pct, degree_list))
@@ -73,7 +74,7 @@ def conclude(
     
     ocr = []
     for r in results:
-        if "%" in r[1]:
+        if (set(str(r[1]))-set(['0','1','2','3','4','5','6','7','8','9','.',' ', '%']) == set()):
             continue
 
         ocr.append([get_left_center(r[0]), r[1]])
@@ -113,7 +114,7 @@ def get_left_center(boxes):
 def match(ocr, keypoint, portion, threshold=0.5):
     labels = []
     for text in ocr:
-        if "%" in text[1]:
+        if (set(str(text[1]))-set(['0','1','2','3','4','5','6','7','8','9','.',' ', '%']) == set()):
             continue
 
         labels.append([get_center(text[0]), text[1]])
