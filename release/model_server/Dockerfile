@@ -13,7 +13,7 @@ RUN apt-get update -y && apt-get upgrade -y && \
     pip3 install -r requirements.txt && \
     pip3 install --upgrade setuptools && \
     pip install azureml-sdk && \
-    find ./ -name "__pycache__" -delete && \
+    find ./ -name "*/__pycache__/*" -delete && \
     find ./ -name "*.so" -not \( -path "*/pycocotool/*" \) -delete && \
     cd /model_server/dl_model/models/py_utils/_cpools && \
     python3 setup.py build_ext --inplace && \

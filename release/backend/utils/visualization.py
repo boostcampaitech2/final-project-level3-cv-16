@@ -11,7 +11,7 @@ def get_distance(x1, y1, x2, y2):
 
 def get_arc_center(points):
     x_center, y_center, x_left, y_left, x_right, y_right = points
-    assert abs(get_distance(x_left,y_left, x_center, y_center) - get_distance(x_right, y_right, x_center, y_center)) < 5
+    # assert abs(get_distance(x_left,y_left, x_center, y_center) - get_distance(x_right, y_right, x_center, y_center)) < 5
 
     radius = get_distance(x_left,y_left, x_center, y_center)
     norm_x_left, norm_x_right = (x_left - x_center)/radius, (x_right - x_center)/radius
