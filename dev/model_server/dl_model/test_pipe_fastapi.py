@@ -52,7 +52,7 @@ def load_net(testiter, cfg_name, data_dir, cache_dir, cuda_id=0):
 
 #methods = Pre_load_nets(args.type, 0, args.data_dir, args.cache_path)
 data_path = os.path.join(osp.dirname(osp.abspath(__file__)),"data/piedata(1008)")
-db_pie, nnet_pie = load_net(50000, "CornerNetPurePie", data_path,  "cache_path", 0)
+db_pie, nnet_pie = load_net(45000, "CornerNetPurePie", data_path,  "cache_path", 0)
 path = "dl_model.testfile.test_CornerNetPurePie"
 testing_pie = importlib.import_module(path).testing
 
