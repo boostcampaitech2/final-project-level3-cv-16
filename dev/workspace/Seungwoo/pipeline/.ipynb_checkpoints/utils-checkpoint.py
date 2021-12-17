@@ -7,14 +7,28 @@ from copy import copy
 import matplotlib.pyplot as plt
 import json
 import requests
+def pre_predict(reader, img, debug=False):
+    url = "http://sanghyun.ddns.net:8000/items/"
+    req = {"instances": img.tolist()}  # [H, W, C]
 
+    response = requests.post(url=url, data=json.dumps(req))
+    results = reader.readtext(img)
+    res_eval = eval(response.text)
+    portion = list(map(dgr2pct, res_eval["dgr"]))
+    keypoint = [
+        [x_center, y_center, x_left, y_left, x_right, y_right]
+        for [[x_center, y_center], [x_left, y_left], [x_right, y_right], _] in res_eval[
+            "grp"
+        ]
+    ]
+    return conclude(img, results, keypoint, portion, debug=debug)
 
 def predict(reader, img, debug=False):
     url = "http://sanghyun.ddns.net:8000/items/"
     req = {"instances": img.tolist()}  # [H, W, C]
 
     response = requests.post(url=url, data=json.dumps(req))
-    results = reader.readtext(img)
+    results = reader.readtext(img, text_threshold = 0.3, paragraph = True, y_ths = 0.05, width_ths =0.3)
     res_eval = eval(response.text)
     portion = list(map(dgr2pct, res_eval["dgr"]))
     keypoint = [
@@ -38,11 +52,12 @@ def conclude(image, results, keypoint, portion, threshold=0, debug=False):
         print()
         plt.imshow(nopie)
     ocr = []
-    for r in results:
-        if "%" in r[1]:
+    for r in results: #(좌표, 값)
+        if (set(str(r[1]))-set(['0','1','2','3','4','5','6','7','8','9','.',' ', '%']) == set()):
+            print('number: ',r[1])
             continue
-        if r[2] < threshold:
-            continue
+        print(r[1])
+
 
         ocr.append([get_left_center(r[0]), r[1]])
 
@@ -135,10 +150,9 @@ def get_left_center(boxes):
 def match(ocr, keypoint, portion, threshold=0.5):
     labels = []
     for text in ocr:
-        if "%" in text[1]:
+        if (set(str(text[1]))-set(['0','1','2','3','4','5','6','7','8','9','.',' ', '%']) == set()):
             continue
-        if text[2] < threshold:
-            continue
+
 
         labels.append([get_center(text[0]), text[1]])
 
