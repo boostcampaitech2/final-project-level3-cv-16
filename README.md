@@ -65,7 +65,8 @@
     **response**
     - "im_shape" : 원본 이미지의 크기 ([H, W, C] : List[int, int, int])
     - "dgr" : 추론된 각도 ([drg1, drg2, ...] : [int, ...])
-    - "grp" : 추론된 keypoints의 그룹 ([[center_x, center_y, cw_x, cw_y, ccw_x, ccw_y], ...] : List[List[int, int, int, int, int, int], ...])
+    - "grp" : 추론된 keypoints의 그룹  
+      ([[[center_x, center_y], [cw_x, cw_y], [ccw_x, ccw_y]], ...] : List[List[List[int, int],List[int, int],List[int, int]], ...])
 
 
 ### trace
