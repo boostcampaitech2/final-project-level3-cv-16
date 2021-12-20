@@ -58,20 +58,14 @@ def plot_model_results(image_arr, im_shape, degree_list, flattened_keypoints):
             'fc': (1.0, 1.0, 1.0)
         }
         text_str = f"{float(degree)/360*100:.2f}%"
-        if degree < 180:
-            plt.text(
-                text_x, text_y, 
-                text_str, fontsize=int(unit * (30 / 8)),
-                bbox = bbox_config
-            )
-        else:
+        if degree > 180:
             text_x = 2 * center_x - text_x
             text_y = 2 * center_y - text_y
-            plt.text(
-                text_x, text_y, 
-                text_str, fontsize=int(unit * (30 / 8)),
-                bbox = bbox_config
-            )
+        plt.text(
+            text_x, text_y, 
+            text_str, fontsize=int(unit * (30 / 8)),
+            bbox = bbox_config
+        )
 
     plt.axis('off')
     plt.xticks([])
