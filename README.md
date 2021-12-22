@@ -1,3 +1,7 @@
+# Final Project
+
+- prototype  
+
 <div align="center">
 
 ![passionate](https://user-images.githubusercontent.com/69357689/147056853-ce875e01-dcfb-45d5-8a2c-d81b376b97f8.gif)
@@ -16,14 +20,11 @@
 ![ubuntu](http://img.shields.io/badge/Ubuntu-000000?style=flat-square&logo=Ubuntu)
 ![git](http://img.shields.io/badge/Git-000000?style=flat-square&logo=Git)
 ![github](http://img.shields.io/badge/Github-000000?style=flat-square&logo=Github)
-</div align="center">
-
-# Final Project
-
-- prototype  
-![image](https://user-images.githubusercontent.com/35767146/146443903-3fd3c41d-3bda-40c0-8c9a-061700c206aa.png)  
-![image](https://user-images.githubusercontent.com/35767146/146443941-ca06b8d2-66e8-4ed6-8d24-a0370c19efa9.png)  
-![image](https://user-images.githubusercontent.com/35767146/146443965-48823737-9906-42e1-9beb-6e03a4083d14.png)  
+</div align="center">  
+  
+## Pipeline  
+  
+![image](https://user-images.githubusercontent.com/35767146/147057474-4f345088-b777-49d3-a327-bb552a067a32.png)
 
 
 ## Version Info
