@@ -17,6 +17,7 @@
   
 ![python](http://img.shields.io/badge/Python-000000?style=flat-square&logo=Python)
 ![pytorch](http://img.shields.io/badge/PyTorch-000000?style=flat-square&logo=PyTorch)
+![open-cv](http://img.shields.io/badge/OpenCV-000000?style=flat-square&logo=OpenCV)
 ![docker](http://img.shields.io/badge/Docker-000000?style=flat-square&logo=Docker)
 ![fastapi](http://img.shields.io/badge/FastAPI-000000?style=flat-square&logo=FastAPI)
 ![streamlit](http://img.shields.io/badge/Streamlit-000000?style=flat-square&logo=Streamlit)
