@@ -1,4 +1,8 @@
+<div align="center">
+
 ![passionate](https://user-images.githubusercontent.com/69357689/147056853-ce875e01-dcfb-45d5-8a2c-d81b376b97f8.gif)
+</div align="center">
+  
 # Passion-ate🔥
 | [강재현](https://github.com/AshHyun) | [김민준](https://github.com/danny0628) | [박상현](https://github.com/hyun06000) | [서광채](https://github.com/Gwang-chae) | [오하은](https://github.com/Haeun-Oh) | [이승우](https://github.com/DaleLeeCoding) |
 | :-: | :-: | :-: | :-: | :-: | :-: |
