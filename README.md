@@ -1,4 +1,4 @@
-# P.I.E (PieChart Information Extractor)
+# PIE : Pie-chart Information Extractor
 
 - Prototype  
 
@@ -17,10 +17,12 @@
   
 ![python](http://img.shields.io/badge/Python-000000?style=flat-square&logo=Python)
 ![pytorch](http://img.shields.io/badge/PyTorch-000000?style=flat-square&logo=PyTorch)
+![docker](http://img.shields.io/badge/Docker-000000?style=flat-square&logo=Docker)
+![fastapi](http://img.shields.io/badge/FastAPI-000000?style=flat-square&logo=FastAPI)
+![streamlit](http://img.shields.io/badge/Streamlit-000000?style=flat-square&logo=Streamlit)
 ![ubuntu](http://img.shields.io/badge/Ubuntu-000000?style=flat-square&logo=Ubuntu)
 ![git](http://img.shields.io/badge/Git-000000?style=flat-square&logo=Git)
 ![github](http://img.shields.io/badge/Github-000000?style=flat-square&logo=Github)
-![docker](http://img.shields.io/badge/Docker-000000?style=flat-square&logo=Docker)
 </div align="center">  
   
 ## Pipeline  
