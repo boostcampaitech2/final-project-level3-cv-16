@@ -20,6 +20,7 @@
 ![ubuntu](http://img.shields.io/badge/Ubuntu-000000?style=flat-square&logo=Ubuntu)
 ![git](http://img.shields.io/badge/Git-000000?style=flat-square&logo=Git)
 ![github](http://img.shields.io/badge/Github-000000?style=flat-square&logo=Github)
+![docker](http://img.shields.io/badge/Docker-000000?style=flat-square&logo=Docker)
 </div align="center">  
   
 ## Pipeline  
