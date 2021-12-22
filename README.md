@@ -1,4 +1,4 @@
-# Final Project
+# P.I.E (PieChart Information Extractor)
 
 - Prototype  
 
