@@ -29,7 +29,7 @@
 
 
 ## Version Info
-### 0.2.0 버전
+### 0.3.0 버전
 
 - frontend
   - streamlit 으로 구성
