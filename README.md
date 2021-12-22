@@ -5,6 +5,7 @@
 |  | [Blog](https://danny0628.tistory.com/) | [Blog](https://davi06000.tistory.com/) |[Notion](https://kcseo25.notion.site/) |  | [Notion](https://leeseungwoo.notion.site/) |
 
 <div align="center">
+  
 ![python](http://img.shields.io/badge/Python-000000?style=flat-square&logo=Python)
 ![pytorch](http://img.shields.io/badge/PyTorch-000000?style=flat-square&logo=PyTorch)
 ![ubuntu](http://img.shields.io/badge/Ubuntu-000000?style=flat-square&logo=Ubuntu)
