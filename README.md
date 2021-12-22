@@ -1,6 +1,6 @@
 # Final Project
 
-- prototype  
+- Prototype  
 
 <div align="center">
 
