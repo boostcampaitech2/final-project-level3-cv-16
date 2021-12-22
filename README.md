@@ -1,4 +1,4 @@
-# PIE : Pie-chart Information Extractor
+# P.I.E (PieChart Information Extractor)
 
 - Prototype  
 
