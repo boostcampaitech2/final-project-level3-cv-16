@@ -1,47 +1,15 @@
-import json
-import os
 import math
-from functools import cmp_to_key
-from PIL import Image, ImageDraw
-from tqdm import tqdm
-import numpy as np
-type_dict = {0:(0,255,0),1:(255,0,0),2:(230,230,0),3:(230,0,233),4:(255,0,255)}
-def drawArc(im, group, type):
-    try:
-        print("The input image is ndarray")
-        im = Image.fromarray(im)
-        draw = ImageDraw.Draw(im)
-    except:
-        draw = ImageDraw.Draw(im)
-    xy_list1 = [group[0], group[1]]
-    xy_list2 = [group[0], group[2]]
-    draw.line(xy_list1, fill=type_dict[type], width=2)
-    draw.line(xy_list2, fill=type_dict[type], width=2)
-    theta1 = math.degrees(math.acos((group[1][0]-group[0][0])/(math.sqrt(math.pow(group[1][0]-group[0][0], 2) + math.pow(group[1][1]-group[0][1], 2)))))
-    if group[1][1]-group[0][1] > 0:
-        theta1 = 360-theta1
-    theta2 = math.degrees(math.acos((group[2][0] - group[0][0]) / (
-        math.sqrt(math.pow(group[2][0] - group[0][0], 2) + math.pow(group[2][1] - group[0][1], 2)))))
-    if group[2][1] - group[0][1] > 0:
-        theta2 = 360-theta2
-    r = math.sqrt(math.pow(group[2][0] - group[0][0], 2) + math.pow(group[2][1] - group[0][1], 2))
-    xy = (group[0][0]-r, group[0][1]-r, group[0][0]+r, group[0][1]+r)
-    draw.arc(xy, 360-theta2, 360-theta1, fill=type_dict[type], width=3)
-    del draw
+
 
 def get_point(points, threshold):
-    count = 0
     points_clean = []
     for point in points:
         if point['score'] > threshold:
-            count += 1
             points_clean.append(point)
     return points_clean
 
-
 def cal_dis(a, b):
     return math.sqrt(math.pow(a['bbox'][0]-b['bbox'][0], 2)+math.pow(a['bbox'][1]-b['bbox'][1], 2))
-
 
 def cross(a):
     center_x = center['bbox'][0]
@@ -65,7 +33,6 @@ def pair_one(center_point, key_points):
         groups.append([tuple(center_point['bbox'][0:2]), tuple(key_points[i]['bbox'][0:2]), tuple(key_points[(i+1)%len(key_points)]['bbox'][0:2]), score])
     return groups
 
-
 def pair_multi(center_points, key_points, r, threshold):
     global center
     center = center_points[0]
@@ -84,7 +51,6 @@ def pair_multi(center_points, key_points, r, threshold):
                 'score']) / 3
             groups.append([tuple(tar_center['bbox'][0:2]), tuple(key_points[i]['bbox'][0:2]), tuple(key_points[(i+1)%len(key_points)]['bbox'][0:2]), score])
     return groups
-
 
 def get_count(all_r, threshold):
     max_count = 0
@@ -119,7 +85,6 @@ def estimatie_r(centers, keys):
     r, threshold = binary_search(all_r, target_count)
     return r, threshold
 
-
 def check_key(k, keys, centers):
     key = keys[k]
     left_key = keys[(k-1)%len(keys)]
@@ -134,7 +99,6 @@ def check_key(k, keys, centers):
             break
     return flag
 
-
 def check_center(keys, center):
     flag = False
     for i in range(len(keys)):
@@ -144,8 +108,6 @@ def check_center(keys, center):
             flag = True
             break
     return flag
-
-
 
 def filter(centers, keys):
     global center
@@ -159,66 +121,14 @@ def filter(centers, keys):
             centers.remove(centers[i])
     return centers, keys
 
-
-def get_anno(groups, image_id, category_id):
-    annos = []
-    for group in groups:
-        anno = {}
-        anno['image_id'] = image_id
-        anno['category_id'] = category_id
-        segem = []
-        xa = group[1][0] - group[0][0]
-        ya = group[1][1] - group[0][1]
-        xb = group[2][0] - group[0][0]
-        yb = group[2][1] - group[0][1]
-        cross = xa * yb - xb * ya
-        r = math.sqrt(xa * xa + ya * ya)
-        if cross != 0:
-            xm = (xa + xb) / 2
-            ym = (ya + yb) / 2
-            ration = r / math.sqrt(xm * xm + ym * ym)
-            xm = ration * xm
-            ym = ration * ym
-            if cross > 0:
-                xm = -xm
-                ym = -ym
-        else:
-            xm = ya
-            ym = -xa
-            if ya < 0:
-                xm = -xm
-                ym = -ym
-        xm_l = (xb + xm) / 2
-        ym_l = (yb + ym) / 2
-        xm_r = (xa + xm) / 2
-        ym_r = (ya + ym) / 2
-        ration = r / math.sqrt(xm_l * xm_l + ym_l * ym_l)
-        xm_l = ration * xm_l
-        ym_l = ration * ym_l
-        ration = r / math.sqrt(xm_r * xm_r + ym_r * ym_r)
-        xm_r = ration * xm_r
-        ym_r = ration * ym_r
-        xm_ = round(xm + group[0][0], 2)
-        ym_ = round(ym + group[0][1], 2)
-        xm_l = round(xm_l + group[0][0], 2)
-        ym_l = round(ym_l + group[0][1], 2)
-        xm_r = round(xm_r + group[0][0], 2)
-        ym_r = round(ym_r + group[0][1], 2)
-        segem.append([group[0][0], group[0][1], group[2][0], group[2][1], xm_l, ym_l, xm_, ym_, xm_r, ym_r, group[1][0], group[1][1]])
-        anno['bbox'] = [group[0][0]-0.5*r, group[0][1]-0.5*r, group[0][0]+0.5*r, group[0][1]+0.5*r]
-        anno['segmentation'] = segem
-        anno['score'] = group[3]
-        annos.append(anno)
-    return annos
-
 def ekey(x):
     return x[0]
 
-def GroupPie(image, tls_raw, brs_raw):
+def GroupPie(tls_raw, brs_raw):
     centers = []
     for temp in tls_raw.values():
         for point in temp:
-            bbox = [point[2], point[3], 6, 6]
+            bbox = [point[2], point[3]]
             bbox = [float(e) for e in bbox]
             category_id = int(point[1])
             score = float(point[0])
@@ -226,7 +136,7 @@ def GroupPie(image, tls_raw, brs_raw):
     keys = []
     for temp in brs_raw.values():
         for point in temp:
-            bbox = [point[2], point[3], 6, 6]
+            bbox = [point[2], point[3]]
             bbox = [float(e) for e in bbox]
             category_id = int(point[1])
             score = float(point[0])
@@ -237,13 +147,9 @@ def GroupPie(image, tls_raw, brs_raw):
         centers, keys = filter(centers, keys)
         if len(centers) == 1:
             groups = pair_one(centers[0], keys)
-            # for group in groups:
-                # drawArc(image, group, 0)
         if len(centers) > 1:
             r, threshold = estimatie_r(centers, keys)
             groups = pair_multi(centers, keys, r, threshold)
-            # for group in groups:
-                # drawArc(image, group, 0)
         data_rs = []
         for group in groups:
             center_x = group[0][0]
@@ -273,5 +179,4 @@ def GroupPie(image, tls_raw, brs_raw):
         return theta_rtn, group_rtn
 
     else:
-        return ["data_pure is not found"],["groups is not found"]
-
+        return ["theta is not found"],["group is not found"]
