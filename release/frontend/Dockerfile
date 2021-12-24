@@ -10,6 +10,7 @@ RUN apt-get update -y && \
     pip install --upgrade pip setuptools wheel && \
     pip install numpy==1.21.4 && \
     pip install streamlit==1.2.0 && \
+    pip install matplotlib && \
     pip install pandas
     
 CMD streamlit run main.py \

@@ -1,1 +1,0 @@
-docker network create --driver bridge PIE_network
