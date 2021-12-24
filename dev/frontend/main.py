@@ -2,7 +2,6 @@ import io
 import json
 import requests
 import time
-import math
 
 import numpy as np
 from PIL import Image
