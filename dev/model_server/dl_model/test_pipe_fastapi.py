@@ -69,7 +69,7 @@ class TEST_MODEL:
         cens = results[0]
         keys = results[1]
         # print(results)
-        pie_data, groups = GroupPie(x, cens, keys)
+        pie_data, groups = GroupPie(cens, keys)
         
         return pie_data, groups
 dl_model = TEST_MODEL(db_pie, nnet_pie, debug=False)
