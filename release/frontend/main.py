@@ -2,7 +2,6 @@ import io
 import json
 import requests
 import time
-import math
 
 import numpy as np
 from PIL import Image
@@ -13,26 +12,15 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 def main():
-    door_image = Image.open('hourglass.png')
+    door_image = Image.open('./asset/hourglass.png')
     
     st.image(door_image)
     st.title("PIE")
     st.markdown('''\n\n''')
-    sample_title = '<p style="font-family:sans-serif; color: black; font-size: 25px;">Sample</p>'
+
+    sample_title = '<p style="font-family:sans-serif; color: tomato; font-size: 25px;">Choose your pie chart image</p>'
     st.markdown(sample_title, unsafe_allow_html= True)
-
-    col1 , col2 = st.columns(2)
-    with col1:
-        col1_text = '<p style="font-family:courier; color:tomato; font-size: 15px;">Input</p>'
-        st.markdown(col1_text, unsafe_allow_html=True)
-        st.image("input1.png")
-
-    with col2:
-        col2_text = '<p style="font-family:courier; color:tomato; font-size: 15px;">Output</p>'
-        st.markdown(col2_text, unsafe_allow_html=True)
-        st.image("output2.png")
-
-    st.header("Choose your pie chart image")
+    #st.header("Choose your pie chart image")
     uploaded_file = st.file_uploader(
         "",
         type=["jpg", "jpeg","png"]
@@ -77,16 +65,28 @@ def main():
         color=['cornsilk','beige','khaki','darkkhaki', 'olive'] 
 
         temp = np.arange(len(ocr_result))
-        fig = plt.figure(figsize=(15,7))
-        plt.bar(temp, ocr_result['value'], color=color)
-        plt.plot(temp,ocr_result['value'], color='black')
-        plt.xticks(temp, ocr_result['category'])
 
-        new_title = '<p style="font-family:sans-serif; color:gray; font-size: 21px;">Pie chart &rightarrow; Bar chart/Line chart</p>'
-        st.markdown(new_title, unsafe_allow_html= True)
 
-        fig.canvas.draw()
-        st.pyplot(fig)
+        
+
+        graph_col1, graph_col2 = st.columns(2)
+        with graph_col1:
+            new_title = '<p style="font-family:sans-serif; color:gray; font-size: 21px;">Pie chart &rightarrow; Bar chart</p>'
+            st.markdown(new_title, unsafe_allow_html= True)
+            fig = plt.figure(figsize=(15,7))
+            plt.bar(temp, ocr_result['value'], color=color)
+            plt.xticks(temp, ocr_result['category'])
+            fig.canvas.draw()
+            st.pyplot(fig)
+        with graph_col2:
+            new_title2 = '<p style="font-family:sans-serif; color:gray; font-size: 21px;">Pie chart &rightarrow; Line chart</p>'
+            st.markdown(new_title2, unsafe_allow_html= True)
+            fig2 = plt.figure(figsize=(15,7))
+            plt.plot(temp,ocr_result['value'], color='black')
+            plt.xticks(temp,ocr_result['category'])
+            fig2.canvas.draw()
+            st.pyplot(fig2)
+
 
         st.subheader("CSV file")
         st.write(ocr_result)
@@ -101,7 +101,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-    st.sidebar.image('dog.png')
+    st.sidebar.image('./asset/dog.png')
     st.sidebar.markdown('''
           ### Author \n 
             You can check code in ** Github ** ** [here](https://github.com/boostcampaitech2/final-project-level3-cv-16) ** \n
@@ -113,5 +113,7 @@ if __name__ == "__main__":
             ** Seo Gwang Chae : https://github.com/Gwang-chae ** \n
             ** Oh  Ha  Eun :  https://github.com/Haeun-Oh ** \n
             ** Lee Seung Woo : https://github.com/DaleLeeCoding ** \n
+
             ''')
-    st.sidebar.image('cat.png')
+    st.sidebar.image('./asset/cat.png')
+
