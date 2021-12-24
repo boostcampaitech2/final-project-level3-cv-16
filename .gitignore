@@ -3,5 +3,6 @@
 /**/*.jpeg
 /**/data/
 /**/*.pkl
+/**/.so
 /**/__pycache__/
 .pyc
